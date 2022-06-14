@@ -35,7 +35,7 @@ var moveZeroes = function (nums) {
         nums[startIndexOfZero] = 0;
         // and inc/dec the zero element index
         startIndexOfZero--;
-        // currentIndex--;
+        currentIndex--;
       }
 
       currentIndex++;
@@ -51,6 +51,6 @@ function shiftElementLeft(nums, currentIndex) {
   }
 }
 
-const numbs = [0, 1, 0, 3, 12];
+const numbs = [0, 0, 1];
 moveZeroes(numbs);
 console.log(numbs);
