@@ -51,19 +51,36 @@ class LinkedList {
     return array;
   }
 
-  insert(index, value) {
-    // 1 -> 2 -> 3 -> 4
-    // 1 -> 2 -> 3 -> 99 -> 4
-    const newNode = new Node(value);
-
-    let currentNode = this.head;
-    let currentIndex = 0;
-    while (currentNode) {
-      if (currentIndex == index) {
-        // wip
-      }
-      currentIndex++;
+  traverseToIndex(index) {
+    if (index >= this.length) {
+      console.log("Index out of bounds");
     }
+
+    let counter = 0;
+    let currentNode = this.head;
+    while (counter !== index) {
+      currentNode = currentNode.next;
+      counter++;
+    }
+    return currentNode;
+  }
+
+  insert(index, value) {
+    // 1 -> 10 -> 5 -> 16
+    // 1 -> 10 -> 99 -> 5 -> 16
+
+    // if index is greater than length of the linked list, just append an item
+    if (index >= this.length) {
+      return this.append(value);
+    }
+
+    const newNode = new Node(value);
+    const leader = this.traverseToIndex(index - 1);
+    const temp = leader.next;
+    leader.next = newNode;
+    newNode.next = temp;
+    this.length++;
+    return this.printList();
   }
 }
 
