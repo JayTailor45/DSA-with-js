@@ -82,6 +82,19 @@ class LinkedList {
     this.length++;
     return this.printList();
   }
+
+  remove(index) {
+    // if index is greater than length of the linked list, just append an item
+    if (index >= this.length) {
+      console.log("Invalid index");
+    }
+
+    const leader = this.traverseToIndex(index - 1);
+    const temp = leader.next;
+    leader.next = temp.next;
+    this.length--;
+    return this.printList();
+  }
 }
 
 const myLinkedList = new LinkedList(10);
@@ -90,4 +103,8 @@ myLinkedList.append(16);
 myLinkedList.prepend(1);
 console.log(myLinkedList.printList());
 myLinkedList.insert(2, 99);
+console.log(myLinkedList.printList());
+myLinkedList.remove(2);
+console.log(myLinkedList.printList());
+myLinkedList.remove(2);
 console.log(myLinkedList.printList());
