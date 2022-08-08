@@ -1,0 +1,142 @@
+class Node {
+  constructor(value) {
+    this.left = null;
+    this.right = null;
+    this.value = value;
+  }
+}
+
+class BinarySearchTree {
+  constructor() {
+    this.root = null;
+  }
+  insert(value) {
+    const newNode = new Node(value);
+    if (!this.root) {
+      this.root = newNode;
+    } else {
+      let currentNode = this.root;
+      while (true) {
+        if (value < currentNode.value) {
+          if (!currentNode.left) {
+            currentNode.left = newNode;
+            return;
+          }
+          currentNode = currentNode.left;
+        } else {
+          if (!currentNode.right) {
+            currentNode.right = newNode;
+            return;
+          }
+          currentNode = currentNode.right;
+        }
+      }
+    }
+  }
+  lookup(value) {
+    if (this.root) {
+      let currentNode = this.root;
+      while (currentNode) {
+        if (value < currentNode.value) {
+          currentNode = currentNode.left;
+        } else if (value > currentNode.value) {
+          currentNode = currentNode.right;
+        } else if (currentNode.value === value) {
+          return currentNode;
+        }
+      }
+    }
+    return false;
+  }
+  remove(value) {
+    if (this.root) {
+      while (currentNode) {
+        let currentNode = this.root;
+        let previousNode = null;
+        // traverse until node to remove is found and store previous node in the process
+        if (value < currentNode.value) {
+          previousNode = currentNode;
+          currentNode = currentNode.left;
+        } else if (value > currentNode.value) {
+          previousNode = currentNode;
+          currentNode = currentNode.right;
+        } else if (value === currentNode.value) {
+          // node to delete is found
+
+          // if we don't have right child
+          if (currentNode.right === null) {
+            if (previousNode === null) {
+              this.root = currentNode.left;
+            } else {
+              if (currentNode.value < previousNode.value) {
+                previousNode.left = currentNode.left;
+              } else if (currentNode.value > previousNode.value) {
+                previousNode.right = currentNode.left;
+              }
+            }
+          }
+
+          // if we have right child which doesn't have a left child
+          else if (currentNode.right.left === null) {
+            currentNode.right.left = currentNode.left;
+            if (previousNode === null) {
+              this.root = currentNode.right;
+            } else {
+              if (previousNode.value < currentNode.value) {
+                previousNode.left = currentNode.right;
+              } else if (previousNode.value > currentNode.value) {
+                previousNode.right = currentNode.right;
+              }
+            }
+          } else {
+            // Find right child's left most child
+            let leftMost = currentNode.right.left;
+            let leftMostParent = currentNode.right;
+            while (leftMost !== null) {
+              leftMostParent = leftMost;
+              leftMost = leftMost.left;
+            }
+
+            // Perent's left subtree is now left most's right subtree
+            if (previousNode === null) {
+              this.root = leftMost;
+            } else {
+              if (currentNode.value < previousNode.value) {
+                previousNode.left = leftMost;
+              } else if (currentNode.value > previousNode.value) {
+                previousNode.right = leftMost;
+              }
+            }
+          }
+          return true;
+        }
+      }
+    }
+  }
+}
+
+const tree = new BinarySearchTree();
+tree.insert(9);
+tree.insert(4);
+tree.insert(6);
+tree.insert(20);
+tree.insert(170);
+tree.insert(15);
+tree.insert(1);
+console.log(tree.root);
+// JSON.stringify(traverse(tree.root));
+
+console.log(tree.lookup(4));
+
+tree.remove(4);
+
+//     9
+//  4     20
+//1  6  15  170
+
+function traverse(node) {
+  const tree = { value: node.value };
+  tree.left = node.left === null ? null : traverse(node.left);
+  tree.right = node.right === null ? null : traverse(node.right);
+  return tree;
+}
