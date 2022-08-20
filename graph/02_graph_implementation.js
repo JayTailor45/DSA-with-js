@@ -5,7 +5,7 @@ class Graph {
     this.adjacentList = {
     }; 
   } 
-
+ 
   addVertex(node)  { 
 	  if(this.adjacentList[node]) {
 		  console.log("Node already exists");

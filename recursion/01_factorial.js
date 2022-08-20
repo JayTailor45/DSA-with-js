@@ -10,7 +10,7 @@ function findFactorialRecursive(number) {
 function findFactorialIterative(number) {
   let answer = 1;
 	for(let i = 2; i <= number; i++) {
-		answer *= i;
+		answer *= i; 
 	}
   return answer;
 }
