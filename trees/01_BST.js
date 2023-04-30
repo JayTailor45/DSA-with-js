@@ -113,6 +113,24 @@ class BinarySearchTree {
       }
     }
   }
+
+  breadthFirstSearch() {
+    let currentNode = this.root;
+    let list = [];
+    let queue = [];
+    queue.push(currentNode);
+    while (queue.length > 0) {
+      currentNode = queue.shift();
+      list.push(currentNode.value);
+      if (currentNode.left) {
+        queue.push(currentNode.left);
+      }
+      if (currentNode.right) {
+        queue.push(currentNode.right);
+      }
+    }
+    return list;
+  }
 }
 
 const tree = new BinarySearchTree();
@@ -126,13 +144,15 @@ tree.insert(1);
 console.log(tree.root);
 // JSON.stringify(traverse(tree.root));
 
-console.log(tree.lookup(4));
+// console.log(tree.lookup(4));
 
-tree.remove(4);
+// tree.remove(4);
 
 //     9
 //  4     20
 //1  6  15  170
+
+console.log(tree.breadthFirstSearch());
 
 function traverse(node) {
   const tree = { value: node.value };
