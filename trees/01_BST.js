@@ -10,6 +10,7 @@ class BinarySearchTree {
   constructor() {
     this.root = null;
   }
+
   insert(value) {
     const newNode = new Node(value);
     if (!this.root) {
@@ -33,6 +34,7 @@ class BinarySearchTree {
       }
     }
   }
+
   lookup(value) {
     if (this.root) {
       let currentNode = this.root;
@@ -48,6 +50,7 @@ class BinarySearchTree {
     }
     return false;
   }
+
   remove(value) {
     if (this.root) {
       while (currentNode) {
@@ -146,6 +149,51 @@ class BinarySearchTree {
     }
     return this.breadthFirstSearchRecursive(queue, list);
   }
+
+  inOrderDFS() {
+    return this.traverseInOrder(this.root, []);
+  }
+
+  traverseInOrder(node, list) {
+    if (node.left) {
+      this.traverseInOrder(node.left, list);
+    }
+    list.push(node.value);
+    if (node.right) {
+      this.traverseInOrder(node.right, list);
+    }
+    return list;
+  }
+
+  preOrderDFS() {
+    return this.traversePreOrder(this.root, []);
+  }
+
+  traversePreOrder(node, list) {
+    list.push(node.value);
+    if (node.left) {
+      this.traverseInOrder(node.left, list);
+    }
+    if (node.right) {
+      this.traverseInOrder(node.right, list);
+    }
+    return list;
+  }
+
+  postOrderDFS() {
+    return this.traversePostOrder(this.root, []);
+  }
+
+  traversePostOrder(node, list) {
+    if (node.left) {
+      this.traverseInOrder(node.left, list);
+    }
+    if (node.right) {
+      this.traverseInOrder(node.right, list);
+    }
+    list.push(node.value);
+    return list;
+  }
 }
 
 const tree = new BinarySearchTree();
@@ -169,11 +217,14 @@ console.log(tree.root);
 
 // console.log(tree.breadthFirstSearch());
 
-console.log(tree.breadthFirstSearchRecursive([tree.root], []));
+// console.log(tree.breadthFirstSearchRecursive([tree.root], []));
+console.log(tree.inOrderDFS());
+console.log(tree.preOrderDFS());
+console.log(tree.postOrderDFS());
 
-function traverse(node) {
-  const tree = { value: node.value };
-  tree.left = node.left === null ? null : traverse(node.left);
-  tree.right = node.right === null ? null : traverse(node.right);
-  return tree;
-}
+// function traverse(node) {
+//   const tree = { value: node.value };
+//   tree.left = node.left === null ? null : traverse(node.left);
+//   tree.right = node.right === null ? null : traverse(node.right);
+//   return tree;
+// }
